@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://hc-cleaning-services.netlify.app/sitemap.xml
