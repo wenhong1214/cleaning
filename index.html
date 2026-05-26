@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -34,10 +34,10 @@
   .nav-cta { background: var(--gold); color: var(--navy) !important; padding: 10px 24px !important; border-radius: 4px; font-weight: 700 !important; }
   .nav-cta:hover { background: var(--gold-light); }
 
-  /* ── HERO ── */
-  .hero { min-height: 100vh; display: flex; align-items: center; padding: 120px 60px 80px; position: relative; }
+  /* ── HERO (Fixed Layout) ── */
+  .hero { min-height: 100vh; display: flex; justify-content: space-between; align-items: center; gap: 40px; padding: 120px 60px 80px; position: relative; }
   .hero::after { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000') center/cover; opacity: 0.15; z-index: 0; }
-  .hero-content { position: relative; z-index: 2; max-width: 650px; }
+  .hero-content { position: relative; z-index: 2; max-width: 650px; align-self: center; }
   .hero-eyebrow { display: inline-flex; align-items: center; gap: 12px; font-size: 12px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; font-weight: 700; }
   .hero-eyebrow::before { content: ''; display: block; width: 40px; height: 2px; background: var(--gold); }
   .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(48px, 6vw, 80px); font-weight: 900; line-height: 1.1; margin-bottom: 30px; }
@@ -46,7 +46,8 @@
   .btn-primary { background: var(--gold); color: var(--navy); padding: 16px 36px; border-radius: 4px; font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: 0.3s; z-index: 2; position: relative;}
   .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
 
-  .hero-stats { position: absolute; right: 60px; bottom: 60px; z-index: 2; display: flex; gap: 50px; background: rgba(17,28,43,0.8); padding: 30px 50px; border: 1px solid var(--border); border-radius: 8px; backdrop-filter: blur(5px);}
+  /* Removed Absolute Positioning to prevent overlap */
+  .hero-stats { z-index: 2; display: flex; gap: 50px; background: rgba(17,28,43,0.8); padding: 30px 50px; border: 1px solid var(--border); border-radius: 8px; backdrop-filter: blur(5px); align-self: flex-end; }
   .stat-item { text-align: center; }
   .stat-num { font-family: 'Playfair Display', serif; font-size: 46px; font-weight: 700; color: var(--gold); line-height: 1; display: block; }
   .stat-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); margin-top: 8px; display: block; font-weight: 500;}
@@ -138,8 +139,8 @@
      ========================================= */
   /* 1. 小笔记本保护机制 */
   @media (max-width: 1200px) {
-    .hero { flex-direction: column; justify-content: center; align-items: flex-start; padding-top: 150px; }
-    .hero-stats { position: relative; right: auto; bottom: auto; margin-top: 50px; flex-wrap: wrap; }
+    .hero { flex-direction: column; justify-content: center; align-items: flex-start; padding-top: 150px; gap: 0; }
+    .hero-stats { margin-top: 50px; flex-wrap: wrap; align-self: flex-start; }
   }
   /* 2. 平板端机制 */
   @media (max-width: 900px) {
@@ -420,7 +421,7 @@
         <button type="submit" class="submit-btn">Submit Request</button>
       </form>
     </div>
-  </div> <!-- 结束 quote-layout 必须有这个 -->
+  </div> 
 </section>
 
 <!-- DOWNLOAD PROFILE MODAL (弹窗 HTML) -->
@@ -497,45 +498,39 @@
 
   function closeProfileModal() {
     document.getElementById('profileModal').style.display = 'none';
-    document.getElementById('dlSuccess').style.display = 'none'; // reset
+    document.getElementById('dlSuccess').style.display = 'none'; 
   }
 
   function submitProfileForm(e) {
-    e.preventDefault(); // Prevent page refresh
+    e.preventDefault(); 
     
-    // Show success message
     document.getElementById('dlSuccess').style.display = 'block';
     
-    // Auto-download PDF after 2 seconds
     setTimeout(() => {
       const fileID = '1JrnD4_CRbmpta0dMBFzSlSuHFrB4chSS'; 
       const directDownloadLink = 'https://drive.google.com/uc?export=download&id=' + fileID;
-      window.location.href = directDownloadLink; // Force download
+      window.location.href = directDownloadLink; 
       closeProfileModal();
     }, 2000);
   }
 
-  // Quote Form to WhatsApp Logic (You missed this part earlier!)
+  // Quote Form to WhatsApp Logic
   function submitToWhatsApp(e) {
-    e.preventDefault(); // Prevent page refresh
+    e.preventDefault(); 
     
-    // Get user input values
     const name = document.getElementById('qName').value;
     const company = document.getElementById('qCompany').value;
     const phone = document.getElementById('qPhone').value;
     const service = document.getElementById('qService').value;
     
-    // Your WhatsApp Number
     const targetWhatsApp = "60172226200";
     
-    // Format the WhatsApp message
     let message = "Hi HC Cleaning, I would like to request a corporate quotation.%0A%0A";
     message += "👤 *Name / Role:* " + name + "%0A";
     message += "🏢 *Company:* " + company + "%0A";
     message += "📞 *Contact:* " + phone + "%0A";
     message += "🛠 *Service Needed:* " + service;
     
-    // Open WhatsApp API link
     const waLink = "https://api.whatsapp.com/send?phone=" + targetWhatsApp + "&text=" + message;
     window.open(waLink, '_blank');
   }
