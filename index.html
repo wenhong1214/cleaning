@@ -46,7 +46,6 @@
   .btn-primary { background: var(--gold); color: var(--navy); padding: 16px 36px; border-radius: 4px; font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: 0.3s; z-index: 2; position: relative;}
   .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
 
-  /* Removed Absolute Positioning to prevent overlap */
   .hero-stats { z-index: 2; display: flex; gap: 50px; background: rgba(17,28,43,0.8); padding: 30px 50px; border: 1px solid var(--border); border-radius: 8px; backdrop-filter: blur(5px); align-self: flex-end; }
   .stat-item { text-align: center; }
   .stat-num { font-family: 'Playfair Display', serif; font-size: 46px; font-weight: 700; color: var(--gold); line-height: 1; display: block; }
@@ -87,9 +86,29 @@
   .awards-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 60px; }
   .client-list { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
   .client-item { padding: 15px; background: var(--navy-mid); border-radius: 4px; font-weight: 500; font-size: 14px; border-left: 3px solid var(--gold); }
-  .award-images { display: flex; gap: 20px; flex-wrap: wrap;}
-  .award-img { width: 180px; height: 240px; object-fit: cover; border: 2px solid var(--gold); border-radius: 4px; opacity: 0.8; transition: 0.3s;}
-  .award-img:hover { opacity: 1; transform: scale(1.05); }
+  
+  /* 🖼️ Updated Images Grid to auto-fit beautifully without squishing */
+  .award-images { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+    gap: 15px; 
+  }
+  .award-img { 
+    width: 100%; 
+    height: 220px; 
+    object-fit: cover; /* Prevents squishing */
+    object-position: center;
+    border: 2px solid var(--gold); 
+    border-radius: 4px; 
+    opacity: 0.8; 
+    transition: all 0.3s ease;
+    cursor: zoom-in; /* Indicates it's clickable */
+  }
+  .award-img:hover { 
+    opacity: 1; 
+    transform: scale(1.03); 
+    box-shadow: 0 5px 15px rgba(212,175,55,0.2);
+  }
 
   /* ── BEFORE / AFTER ── */
   .ba-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: center; }
@@ -109,7 +128,6 @@
   .form-label { display: block; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white-dim); margin-bottom: 8px; }
   .form-input { width: 100%; padding: 15px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: white; font-family: inherit; }
   .form-input:focus { border-color: var(--gold); outline: none; }
-  /* Dropdown fix */
   select.form-input option { background-color: #09101A; color: #FDFBF7; }
   .submit-btn { background: var(--gold); color: var(--navy); width: 100%; padding: 18px; border: none; font-size: 14px; font-weight: 700; text-transform: uppercase; cursor: pointer; border-radius: 4px; margin-top: 10px; transition: 0.3s; }
   .submit-btn:hover { background: var(--gold-light); }
@@ -117,7 +135,7 @@
   .c-item { display: flex; gap: 15px; align-items: center; font-size: 15px; color: var(--white-dim); }
   .c-icon { font-size: 24px; }
 
-  /* ── MODAL (LEAD MAGNET) ── */
+  /* ── MODALS (Lead Magnet & Lightbox) ── */
   .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(9,16,26,0.85); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; z-index: 10000; }
   .modal-box { background: var(--navy-mid); padding: 40px; border-radius: 8px; border: 1px solid var(--border); width: 90%; max-width: 400px; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
   .close-modal { position: absolute; top: 15px; right: 20px; font-size: 28px; color: var(--white-dim); cursor: pointer; line-height: 1; }
@@ -126,6 +144,26 @@
   .modal-box p { font-size: 13px; color: var(--white-dim); margin-bottom: 24px; }
   .modal-box input { width: 100%; padding: 14px; margin-bottom: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: white; font-family: inherit; }
   .modal-box input:focus { border-color: var(--gold); outline: none; }
+
+  /* 🔎 LIGHTBOX STYLES (Zoom in for Pictures) */
+  .lightbox-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(5, 9, 15, 0.95); backdrop-filter: blur(8px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 100000; cursor: zoom-out; opacity: 0; transition: opacity 0.3s ease;
+  }
+  .lightbox-overlay.active { display: flex; opacity: 1; }
+  .lightbox-content {
+    max-width: 90%; max-height: 90vh; border-radius: 8px;
+    border: 2px solid var(--gold); box-shadow: 0 10px 50px rgba(0,0,0,0.8);
+    object-fit: contain; transform: scale(0.95); transition: transform 0.3s ease;
+  }
+  .lightbox-overlay.active .lightbox-content { transform: scale(1); }
+  .lightbox-close {
+    position: absolute; top: 20px; right: 30px; font-size: 40px;
+    color: var(--white); cursor: pointer; line-height: 1; transition: 0.3s;
+  }
+  .lightbox-close:hover { color: var(--gold); }
 
   /* ── FOOTER ── */
   footer { background: #05090F; padding: 60px; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--white-dim); }
@@ -137,17 +175,16 @@
   /* =========================================
      💻 屏幕自适应机制 (Responsive Design)
      ========================================= */
-  /* 1. 小笔记本保护机制 */
   @media (max-width: 1200px) {
     .hero { flex-direction: column; justify-content: center; align-items: flex-start; padding-top: 150px; gap: 0; }
     .hero-stats { margin-top: 50px; flex-wrap: wrap; align-self: flex-start; }
   }
-  /* 2. 平板端机制 */
   @media (max-width: 900px) {
     .about-grid, .services-grid, .awards-grid, .ba-layout, .quote-layout { grid-template-columns: 1fr; }
     .nav-links { display: none; }
   }
-  /* 3. 手机端极致适配 */
+  
+  /* 📱 MOBILE FIXES */
   @media (max-width: 768px) {
     nav { padding: 15px 20px !important; }
     .nav-logo { font-size: 20px; }
@@ -162,10 +199,14 @@
     .service-card { padding: 30px 20px; }
     .form-box { padding: 30px 20px; }
     .client-list { grid-template-columns: 1fr; }
-    .award-images { justify-content: center; gap: 15px; }
-    .award-img { width: 140px; height: 190px; }
+    
+    /* Perfecting the Awards Grid on Mobile */
+    .award-images { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .award-img { height: 180px; } 
+
     .modal-box { padding: 30px 20px; width: 92%; }
     .ba-container { aspect-ratio: 1/1; }
+    .lightbox-close { top: 10px; right: 20px; font-size: 35px; }
   }
 </style>
 </head>
@@ -312,15 +353,18 @@
     </div>
     <div>
       <h4 style="color: var(--gold); margin-bottom: 20px; text-transform: uppercase; font-size: 13px; letter-spacing: 0.1em;">Accolades & Certifications</h4>
+      
+      <!-- Clickable Images Grid -->
       <div class="award-images">
-        <img src="Screenshot 2026-05-25 173600.png" alt="ISO 9001 Certification" class="award-img">
-        <img src="Screenshot 2026-05-25 173923.png" alt="MRA Excellence Award" class="award-img">
-        <img src="Screenshot 2026-05-25 173930.png" alt="5-Star Toilet Rating MBPJ" class="award-img">
-        <img src="Screenshot 2026-05-25 173934.png" alt="5-Star Toilet Rating MBPJ" class="award-img">
-        <img src="Screenshot 2026-05-25 174113.png" alt="5-Star Toilet Rating MBPJ" class="award-img">
-        <img src="Screenshot 2026-05-25 174121.png" alt="5-Star Toilet Rating MBPJ" class="award-img">
+        <img src="Screenshot 2026-05-25 173600.png" alt="ISO 9001 Certification" class="award-img" onclick="openLightbox(this)">
+        <img src="Screenshot 2026-05-25 173923.png" alt="MRA Excellence Award" class="award-img" onclick="openLightbox(this)">
+        <img src="Screenshot 2026-05-25 173930.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
+        <img src="Screenshot 2026-05-25 173934.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
+        <img src="Screenshot 2026-05-25 174113.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
+        <img src="Screenshot 2026-05-25 174121.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
       </div>
-      <p style="font-size: 12px; color: var(--white-dim); margin-top: 15px; font-style: italic;">* Instrumental in achieving MRA Excellence Awards & 5-Star Public Toilet Ratings (MBPJ / Kuantan) for our clients.</p>
+
+      <p style="font-size: 12px; color: var(--white-dim); margin-top: 15px; font-style: italic;">* Instrumental in achieving MRA Excellence Awards & 5-Star Public Toilet Ratings (MBPJ / Kuantan) for our clients. Click images to enlarge.</p>
     </div>
   </div>
 </section>
@@ -442,6 +486,12 @@
   </div>
 </div>
 
+<!-- IMAGE ZOOM LIGHTBOX -->
+<div id="imageLightbox" class="lightbox-overlay" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightboxImg" class="lightbox-content" src="" alt="Zoomed View">
+</div>
+
 <!-- FOOTER -->
 <footer>
   <p><strong>HC CLEANING SERVICES SDN BHD (399404-K)</strong></p>
@@ -490,6 +540,31 @@
       nav.style.background = 'rgba(9,16,26,0.95)';
     }
   });
+
+  // --- LIGHTBOX ZOOM LOGIC ---
+  function openLightbox(imgElement) {
+    const lightbox = document.getElementById('imageLightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    
+    // Set the source to the clicked image
+    lightboxImg.src = imgElement.src;
+    
+    // Show the modal with a smooth fade in
+    lightbox.style.display = 'flex';
+    setTimeout(() => {
+      lightbox.classList.add('active');
+    }, 10);
+  }
+
+  function closeLightbox() {
+    const lightbox = document.getElementById('imageLightbox');
+    lightbox.classList.remove('active');
+    
+    // Wait for transition to finish before hiding display
+    setTimeout(() => {
+      lightbox.style.display = 'none';
+    }, 300);
+  }
 
   // Profile Modal (PDF Lead Magnet) Logic
   function openProfileModal() {
