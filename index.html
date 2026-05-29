@@ -21,7 +21,7 @@
     --border: rgba(212,175,55,0.25);
   }
 
-  /* Added -webkit-tap-highlight-color: transparent; to remove the blue highlight box on mobile */
+  /* 移除移动端点击蓝框 */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
   
   html { scroll-behavior: smooth; }
@@ -37,7 +37,7 @@
   .nav-cta { background: var(--gold); color: var(--navy) !important; padding: 10px 24px !important; border-radius: 4px; font-weight: 700 !important; }
   .nav-cta:hover { background: var(--gold-light); }
 
-  /* ── HERO (Fixed Layout) ── */
+  /* ── HERO ── */
   .hero { min-height: 100vh; display: flex; justify-content: space-between; align-items: center; gap: 40px; padding: 120px 60px 80px; position: relative; }
   .hero::after { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2000') center/cover; opacity: 0.15; z-index: 0; }
   .hero-content { position: relative; z-index: 2; max-width: 650px; align-self: center; }
@@ -48,13 +48,14 @@
   .hero p { font-size: 18px; color: var(--white-dim); max-width: 600px; margin-bottom: 40px; line-height: 1.8; }
   .btn-primary { background: var(--gold); color: var(--navy); padding: 16px 36px; border-radius: 4px; font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; display: inline-block; transition: 0.3s; z-index: 2; position: relative;}
   .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-primary:active { transform: scale(0.95); } /* 点击时稍微收缩 */
 
   .hero-stats { z-index: 2; display: flex; gap: 50px; background: rgba(17,28,43,0.8); padding: 30px 50px; border: 1px solid var(--border); border-radius: 8px; backdrop-filter: blur(5px); align-self: flex-end; }
   .stat-item { text-align: center; }
   .stat-num { font-family: 'Playfair Display', serif; font-size: 46px; font-weight: 700; color: var(--gold); line-height: 1; display: block; }
   .stat-label { font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--white); margin-top: 8px; display: block; font-weight: 500;}
 
-  /* ── MARQUEE (SLIDING BANNER) ── */
+  /* ── MARQUEE ── */
   .marquee-strip { background: var(--gold); padding: 15px 0; overflow: hidden; white-space: nowrap; position: relative; z-index: 10; }
   .marquee-track { display: inline-block; animation: marquee 35s linear infinite; }
   .marquee-item { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--navy); padding: 0 40px; }
@@ -90,7 +91,6 @@
   .client-list { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 30px; }
   .client-item { padding: 15px; background: var(--navy-mid); border-radius: 4px; font-weight: 500; font-size: 14px; border-left: 3px solid var(--gold); }
   
-  /* 🖼️ Updated Images Grid to auto-fit beautifully without squishing */
   .award-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
   .award-img { width: 100%; height: 220px; object-fit: cover; object-position: center; border: 2px solid var(--gold); border-radius: 4px; opacity: 0.8; transition: all 0.3s ease; cursor: zoom-in; }
   .award-img:hover { opacity: 1; transform: scale(1.03); box-shadow: 0 5px 15px rgba(212,175,55,0.2); }
@@ -116,6 +116,8 @@
   select.form-input option { background-color: #09101A; color: #FDFBF7; }
   .submit-btn { background: var(--gold); color: var(--navy); width: 100%; padding: 18px; border: none; font-size: 14px; font-weight: 700; text-transform: uppercase; cursor: pointer; border-radius: 4px; margin-top: 10px; transition: 0.3s; }
   .submit-btn:hover { background: var(--gold-light); }
+  .submit-btn:active { transform: scale(0.97); } /* 按钮按压反馈 */
+
   .contact-info { margin-top: 40px; display: flex; flex-direction: column; gap: 20px; }
   .c-item { display: flex; gap: 15px; align-items: center; font-size: 15px; color: var(--white-dim); }
   .c-icon { font-size: 24px; }
@@ -141,14 +143,49 @@
   /* ── FOOTER ── */
   footer { background: #05090F; padding: 60px; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--white-dim); }
   
-  /* ── FLOATING BUTTONS & CHATBOX ── */
-  .float-wa { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 9999; transition: 0.3s; }
+  /* ── FLOATING BUTTONS 动画增强 ── */
+  .float-wa { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 9999; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
   .float-wa:hover { transform: scale(1.1); }
+  .float-wa:active { transform: scale(0.85); } /* 增加按压反馈感 */
   
-  .float-chat { position: fixed; bottom: 105px; right: 30px; width: 60px; height: 60px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(212,175,55,0.4); z-index: 9999; transition: 0.3s; cursor: pointer; color: var(--navy); font-size: 24px; }
+  .float-chat { position: fixed; bottom: 105px; right: 30px; width: 60px; height: 60px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(212,175,55,0.4); z-index: 9999; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: pointer; color: var(--navy); font-size: 24px; }
   .float-chat:hover { transform: scale(1.1); }
+  .float-chat:active { transform: scale(0.85); } /* 增加按压反馈感 */
 
-  .chat-box-container { display: none; position: fixed; bottom: 180px; right: 30px; width: 320px; height: 400px; background: var(--navy-mid); border: 1px solid var(--border); border-radius: 8px; z-index: 10000; flex-direction: column; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+  /* ── AI CHATBOX 丝滑弹出动画 ── */
+  .chat-box-container { 
+    /* 移除 display: none，使用透明度和位移来实现动画 */
+    display: flex; 
+    position: fixed; 
+    bottom: 180px; 
+    right: 30px; 
+    width: 320px; 
+    height: 400px; 
+    background: var(--navy-mid); 
+    border: 1px solid var(--border); 
+    border-radius: 8px; 
+    z-index: 10000; 
+    flex-direction: column; 
+    overflow: hidden; 
+    box-shadow: 0 15px 40px rgba(0,0,0,0.7); 
+    
+    /* 动画初始状态：隐藏 + 下沉 + 缩小 */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(40px) scale(0.9);
+    transform-origin: bottom right; /* 从右下角展开 */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 带一点回弹的贝塞尔曲线 */
+    pointer-events: none; /* 隐藏时禁止点击内部元素 */
+  }
+
+  /* 加上 .show 后的状态 */
+  .chat-box-container.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
   .chat-header { background: var(--gold); color: var(--navy); padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; font-size: 14px;}
   .message { padding: 10px 14px; border-radius: 6px; font-size: 13px; max-width: 85%; line-height: 1.4; word-wrap: break-word;}
   .message.user-message { background: var(--gold); color: var(--navy); align-self: flex-end; }
@@ -187,7 +224,13 @@
     .ba-container { aspect-ratio: 1/1; }
     .lightbox-close { top: 10px; right: 20px; font-size: 35px; }
     
-    .chat-box-container { right: 20px; left: 20px; width: auto; bottom: 180px;}
+    .chat-box-container { 
+      right: 20px; 
+      left: 20px; 
+      width: auto; 
+      bottom: 180px;
+      transform-origin: bottom center; /* 手机端设为底部中间展开更好看 */
+    }
   }
 </style>
 </head>
@@ -493,6 +536,7 @@
 </div>
 
 <!-- AI CHATBOX -->
+<!-- 注意：这里去掉了原来内联的 style="display: none;"，改为全靠 CSS 类 .show 控制 -->
 <div id="chat-box" class="chat-box-container">
   <div class="chat-header">
     <span>HC Assistant &#128519</span>
@@ -512,15 +556,16 @@
   // 前端 JavaScript 部分
   let conversationHistory = [];
 
+  // 改进的打开/关闭聊天框逻辑（通过增加/移除 class 触发动画）
   function toggleChat() {
       const chatBox = document.getElementById('chat-box');
-      chatBox.style.display = chatBox.style.display === 'none' || chatBox.style.display === '' ? 'flex' : 'none';
+      chatBox.classList.toggle('show');
   }
 
   const closeChatBtn = document.getElementById('close-chat');
   if(closeChatBtn) {
       closeChatBtn.onclick = function() {
-          document.getElementById('chat-box').style.display = 'none';
+          document.getElementById('chat-box').classList.remove('show');
       };
   }
 
