@@ -89,27 +89,9 @@
   .client-item { padding: 15px; background: var(--navy-mid); border-radius: 4px; font-weight: 500; font-size: 14px; border-left: 3px solid var(--gold); }
   
   /* 🖼️ Updated Images Grid to auto-fit beautifully without squishing */
-  .award-images { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
-    gap: 15px; 
-  }
-  .award-img { 
-    width: 100%; 
-    height: 220px; 
-    object-fit: cover; /* Prevents squishing */
-    object-position: center;
-    border: 2px solid var(--gold); 
-    border-radius: 4px; 
-    opacity: 0.8; 
-    transition: all 0.3s ease;
-    cursor: zoom-in; /* Indicates it's clickable */
-  }
-  .award-img:hover { 
-    opacity: 1; 
-    transform: scale(1.03); 
-    box-shadow: 0 5px 15px rgba(212,175,55,0.2);
-  }
+  .award-images { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+  .award-img { width: 100%; height: 220px; object-fit: cover; object-position: center; border: 2px solid var(--gold); border-radius: 4px; opacity: 0.8; transition: all 0.3s ease; cursor: zoom-in; }
+  .award-img:hover { opacity: 1; transform: scale(1.03); box-shadow: 0 5px 15px rgba(212,175,55,0.2); }
 
   /* ── BEFORE / AFTER ── */
   .ba-layout { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: center; }
@@ -146,32 +128,29 @@
   .modal-box input { width: 100%; padding: 14px; margin-bottom: 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: white; font-family: inherit; }
   .modal-box input:focus { border-color: var(--gold); outline: none; }
 
-  /* 🔎 LIGHTBOX STYLES (Zoom in for Pictures) */
-  .lightbox-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(5, 9, 15, 0.95); backdrop-filter: blur(8px);
-    display: none; align-items: center; justify-content: center;
-    z-index: 100000; cursor: zoom-out; opacity: 0; transition: opacity 0.3s ease;
-  }
+  /* 🔎 LIGHTBOX STYLES */
+  .lightbox-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 9, 15, 0.95); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 100000; cursor: zoom-out; opacity: 0; transition: opacity 0.3s ease; }
   .lightbox-overlay.active { display: flex; opacity: 1; }
-  .lightbox-content {
-    max-width: 90%; max-height: 90vh; border-radius: 8px;
-    border: 2px solid var(--gold); box-shadow: 0 10px 50px rgba(0,0,0,0.8);
-    object-fit: contain; transform: scale(0.95); transition: transform 0.3s ease;
-  }
+  .lightbox-content { max-width: 90%; max-height: 90vh; border-radius: 8px; border: 2px solid var(--gold); box-shadow: 0 10px 50px rgba(0,0,0,0.8); object-fit: contain; transform: scale(0.95); transition: transform 0.3s ease; }
   .lightbox-overlay.active .lightbox-content { transform: scale(1); }
-  .lightbox-close {
-    position: absolute; top: 20px; right: 30px; font-size: 40px;
-    color: var(--white); cursor: pointer; line-height: 1; transition: 0.3s;
-  }
+  .lightbox-close { position: absolute; top: 20px; right: 30px; font-size: 40px; color: var(--white); cursor: pointer; line-height: 1; transition: 0.3s; }
   .lightbox-close:hover { color: var(--gold); }
 
   /* ── FOOTER ── */
   footer { background: #05090F; padding: 60px; border-top: 1px solid var(--border); text-align: center; font-size: 13px; color: var(--white-dim); }
   
-  /* ── WHATSAPP FLOAT ── */
+  /* ── FLOATING BUTTONS & CHATBOX ── */
   .float-wa { position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 9999; transition: 0.3s; }
   .float-wa:hover { transform: scale(1.1); }
+  
+  .float-chat { position: fixed; bottom: 105px; right: 30px; width: 60px; height: 60px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(212,175,55,0.4); z-index: 9999; transition: 0.3s; cursor: pointer; color: var(--navy); font-size: 24px; }
+  .float-chat:hover { transform: scale(1.1); }
+
+  .chat-box-container { display: none; position: fixed; bottom: 180px; right: 30px; width: 320px; height: 400px; background: var(--navy-mid); border: 1px solid var(--border); border-radius: 8px; z-index: 10000; flex-direction: column; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+  .chat-header { background: var(--gold); color: var(--navy); padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; font-size: 14px;}
+  .message { padding: 10px 14px; border-radius: 6px; font-size: 13px; max-width: 85%; line-height: 1.4; word-wrap: break-word;}
+  .message.user-message { background: var(--gold); color: var(--navy); align-self: flex-end; }
+  .message.bot-message { background: var(--navy-light); color: var(--white); align-self: flex-start; border: 1px solid var(--border);}
 
   /* =========================================
      💻 屏幕自适应机制 (Responsive Design)
@@ -200,14 +179,13 @@
     .service-card { padding: 30px 20px; }
     .form-box { padding: 30px 20px; }
     .client-list { grid-template-columns: 1fr; }
-    
-    /* Perfecting the Awards Grid on Mobile */
     .award-images { grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .award-img { height: 180px; } 
-
     .modal-box { padding: 30px 20px; width: 92%; }
     .ba-container { aspect-ratio: 1/1; }
     .lightbox-close { top: 10px; right: 20px; font-size: 35px; }
+    
+    .chat-box-container { right: 20px; left: 20px; width: auto; bottom: 180px;}
   }
 </style>
 </head>
@@ -280,7 +258,7 @@
       <div class="section-label">Who We Are</div>
       <h2 class="section-title">A Legacy of Trust and Impeccable Standards.</h2>
       <p>Incorporated as a full-fledged company in 1986, <strong>HC Cleaning Services Sdn Bhd (399404-K)</strong> has grown from a local enterprise into one of the most established facility management corporations in Malaysia. With a paid-up capital of RM250,000.00 and an operational workforce of over 300 dedicated personnel, we do not compromise on quality.</p>
-      <p>We provide comprehensive janitorial, environmental maintenance, and specialized high-rise solutions. Together with our subsidiaries, <em>HTC Eco resources Sdn bhd</em> and <em>Friendly Eco Services</em>, we offer complete property care from the top floor down to the gardens.</p>
+      <p>We provide comprehensive janitorial, environmental maintenance, and specialized high-rise solutions. Together with our subsidiaries, <em>HTC Ecoresources Sdn Bhd</em> and <em>Friendly Eco Services</em>, we offer complete property care from the top floor down to the gardens.</p>
       
       <div class="iso-badge">
         <div style="font-size: 40px;">🏆</div>
@@ -290,7 +268,7 @@
         </div>
       </div>
     </div>
-    <img src="Screenshot 2026-05-25 175627.png" alt="HC Cleaning Corporate" style="width:100%; border-radius: 8px; border: 1px solid var(--border);">
+    <img src="Screenshot%202026-05-25%20175627.png" alt="HC Cleaning Corporate" style="width:100%; border-radius: 8px; border: 1px solid var(--border);">
   </div>
 </section>
 
@@ -319,7 +297,7 @@
     <div class="service-card">
       <div class="service-icon">🌳</div>
       <h3>Landscaping & Horticulture</h3>
-      <p>Provided by our subsidiary, HTC Ecoresources Sdn Bhd. Serving highly demanding clients, including the pore High Commission (2000-2019).</p>
+      <p>Provided by our subsidiary, HTC Ecoresources Sdn Bhd. Serving highly demanding clients, including the Singapore High Commission (2000-2019).</p>
     </div>
     <div class="service-card">
       <div class="service-icon">🧶</div>
@@ -357,12 +335,12 @@
       
       <!-- Clickable Images Grid -->
       <div class="award-images">
-        <img src="Screenshot 2026-05-25 173600.png" alt="ISO 9001 Certification" class="award-img" onclick="openLightbox(this)">
-        <img src="Screenshot 2026-05-25 173923.png" alt="MRA Excellence Award" class="award-img" onclick="openLightbox(this)">
-        <img src="Screenshot 2026-05-25 173930.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
-        <img src="Screenshot 2026-05-25 173934.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
-        <img src="Screenshot 2026-05-25 174113.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
-        <img src="Screenshot 2026-05-25 174121.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
+        <img src="Screenshot%202026-05-25%20173600.png" alt="ISO 9001 Certification" class="award-img" onclick="openLightbox(this)">
+        <img src="Screenshot%202026-05-25%20173923.png" alt="MRA Excellence Award" class="award-img" onclick="openLightbox(this)">
+        <img src="Screenshot%202026-05-25%20173930.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
+        <img src="Screenshot%202026-05-25%20173934.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
+        <img src="Screenshot%202026-05-25%20174113.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
+        <img src="Screenshot%202026-05-25%20174121.png" alt="5-Star Toilet Rating MBPJ" class="award-img" onclick="openLightbox(this)">
       </div>
 
       <p style="font-size: 12px; color: var(--white-dim); margin-top: 15px; font-style: italic;">* Instrumental in achieving MRA Excellence Awards & 5-Star Public Toilet Ratings (MBPJ / Kuantan) for our clients. Click images to enlarge.</p>
@@ -386,10 +364,10 @@
     <div>
       <div class="ba-container" id="baContainer">
         <div class="ba-after">
-          <img src="Screenshot 2026-05-25 175022.png" alt="After Cleaning">
+          <img src="Screenshot%202026-05-25%20175022.png" alt="After Cleaning">
         </div>
         <div class="ba-before-clip" id="baClip">
-          <img src="Screenshot 2026-05-25 174931.png" alt="Before Cleaning">
+          <img src="Screenshot%202026-05-25%20174931.png" alt="Before Cleaning">
         </div>
         <input type="range" min="0" max="100" value="50" class="ba-slider-input" id="baSlider">
         <div class="ba-handle">⇄</div>
@@ -457,7 +435,7 @@
           <label class="form-label">Service Required</label>
           <select id="qService" class="form-input">
             <option>Commercial Contract Cleaning</option>
-            <option>Condominium Maintenence</option>
+            <option>Condominium Maintenance</option>
             <option>Carpet / Upholstery Extraction</option>
             <option>Facade / High-Level Cleaning</option>
             <option>Landscaping & Gardening</option>
@@ -496,7 +474,7 @@
 <!-- FOOTER -->
 <footer>
   <p><strong>HC CLEANING SERVICES SDN BHD (399404-K)</strong></p>
-  <p>Subsidiaries: HTC Eco resources Sdn bhd | Friendly Eco Services Sdn Bhd</p>
+  <p>Subsidiaries: HTC Ecoresources Sdn Bhd | Friendly Eco Services Sdn Bhd</p>
   <p style="margin-top: 15px; opacity: 0.5;">© 2026 All Rights Reserved. ISO 9001:2015 Certified.</p>
 </footer>
 
@@ -507,115 +485,140 @@
   </svg>
 </a>
 
+<!-- AI CHAT TOGGLE -->
+<div onclick="toggleChat()" class="float-chat">
+  💬
+</div>
+
+<!-- AI CHATBOX -->
+<div id="chat-box" class="chat-box-container">
+  <div class="chat-header">
+    <span>HC Assistant</span>
+    <span id="close-chat" style="cursor: pointer; font-size: 20px;">&times;</span>
+  </div>
+  <div id="chat-content" style="flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
+    <div class="message bot-message">Hello! Welcome to HC Cleaning Services. How can I assist you today?</div>
+  </div>
+  <div style="padding: 10px; border-top: 1px solid var(--border); display: flex; gap: 5px; background: var(--navy);">
+    <input type="text" id="user-input" onkeypress="handleKeyPress(event)" placeholder="Type a message..." style="flex: 1; padding: 10px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; color: white; font-family: inherit; font-size: 13px;">
+    <button onclick="sendMessage()" style="background: var(--gold); color: var(--navy); border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; font-weight: bold;">Send</button>
+  </div>
+</div>
+
 <!-- SCRIPTS -->
 <script>
+  // 前端 JavaScript 部分
+  let conversationHistory = [];
+
+  function toggleChat() {
+      const chatBox = document.getElementById('chat-box');
+      chatBox.style.display = chatBox.style.display === 'none' || chatBox.style.display === '' ? 'flex' : 'none';
+  }
+
+  const closeChatBtn = document.getElementById('close-chat');
+  if(closeChatBtn) {
+      closeChatBtn.onclick = function() {
+          document.getElementById('chat-box').style.display = 'none';
+      };
+  }
+
+  function handleKeyPress(e) {
+      if (e.key === 'Enter') {
+          sendMessage();
+      }
+  }
+
+  async function sendMessage() {
+      const inputField = document.getElementById('user-input');
+      const messageText = inputField.value.trim();
+      if (!messageText) return;
+
+      // 在聊天框显示用户的消息
+      addMessageToChat(messageText, 'user-message');
+      inputField.value = '';
+
+      // 把用户的话加入对话历史
+      conversationHistory.push({ "role": "user", "content": messageText });
+
+      const typingId = addMessageToChat("Typing...", 'bot-message');
+
+      try {
+          // 请求 Vercel 后端 API
+          const response = await fetch('/api/chat', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                  messages: conversationHistory
+              })
+          });
+
+          const data = await response.json();
+          document.getElementById(typingId).remove();
+
+          if (data.choices && data.choices.length > 0) {
+              const botReply = data.choices[0].message.content;
+              // 保存AI回复到历史记录
+              conversationHistory.push({ "role": "assistant", "content": botReply });
+              addMessageToChat(botReply, 'bot-message');
+          } else {
+              addMessageToChat("System error. Please call 03-40438599.", 'bot-message');
+          }
+
+      } catch (error) {
+          console.error("API Error:", error);
+          document.getElementById(typingId).remove();
+          addMessageToChat("Network error. Please try again.", 'bot-message');
+      }
+  }
+
+  function addMessageToChat(text, className) {
+      const chatContent = document.getElementById('chat-content');
+      const messageDiv = document.createElement('div');
+      const msgId = 'msg-' + Date.now();
+      messageDiv.id = msgId;
+      messageDiv.className = 'message ' + className;
+      messageDiv.innerText = text;
+      chatContent.appendChild(messageDiv);
+      chatContent.scrollTop = chatContent.scrollHeight;
+      return msgId;
+  }
+
   // Before/After Slider Logic
   const slider = document.getElementById('baSlider');
   const clip = document.getElementById('baClip');
   const container = document.getElementById('baContainer');
 
-  <!-- 前端 JavaScript 部分 -->
-
-    // 前端只保存用户的对话历史，不包含系统指令
-    let conversationHistory = [];
-
-    function toggleChat() {
-        const chatBox = document.getElementById('chat-box');
-        chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
-    }
-
-    document.getElementById('close-chat').onclick = function() {
-        document.getElementById('chat-box').style.display = 'none';
-    };
-
-    function handleKeyPress(e) {
-        if (e.key === 'Enter') {
-            sendMessage();
+  if(slider && clip && container) {
+      slider.addEventListener('input', (e) => {
+        clip.style.width = e.target.value + '%';
+        const img = clip.querySelector('img');
+        if(img) {
+          img.style.width = container.offsetWidth + 'px';
+          img.style.maxWidth = 'none';
         }
-    }
+      });
 
-    async function sendMessage() {
-        const inputField = document.getElementById('user-input');
-        const messageText = inputField.value.trim();
-        if (!messageText) return;
-
-        // 在聊天框显示用户的消息
-        addMessageToChat(messageText, 'user-message');
-        inputField.value = '';
-
-        // 把用户的话加入对话历史
-        conversationHistory.push({ "role": "user", "content": messageText });
-
-        const typingId = addMessageToChat("Typing...", 'bot-message');
-
-        try {
-            // 注意！这里不再请求 openai，而是请求您自己在 Vercel 上的后端 API
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    messages: conversationHistory
-                })
-            });
-
-            const data = await response.json();
-            document.getElementById(typingId).remove();
-
-            if (data.choices && data.choices.length > 0) {
-                const botReply = data.choices[0].message.content;
-                // 保存AI回复到历史记录
-                conversationHistory.push({ "role": "assistant", "content": botReply });
-                addMessageToChat(botReply, 'bot-message');
-            } else {
-                addMessageToChat("System error. Please call 03-40438599.", 'bot-message');
-            }
-
-        } catch (error) {
-            console.error("API Error:", error);
-            document.getElementById(typingId).remove();
-            addMessageToChat("Network error. Please try again.", 'bot-message');
+      window.addEventListener('resize', () => {
+        const img = clip.querySelector('img');
+        if(img) {
+          img.style.width = container.offsetWidth + 'px';
         }
-    }
-
-    function addMessageToChat(text, className) {
-        const chatContent = document.getElementById('chat-content');
-        const messageDiv = document.createElement('div');
-        const msgId = 'msg-' + Date.now();
-        messageDiv.id = msgId;
-        messageDiv.className = 'message ' + className;
-        messageDiv.innerText = text;
-        chatContent.appendChild(messageDiv);
-        chatContent.scrollTop = chatContent.scrollHeight;
-        return msgId;
-    }
-
-  slider.addEventListener('input', (e) => {
-    clip.style.width = e.target.value + '%';
-    const img = clip.querySelector('img');
-    if(img && container) {
-      img.style.width = container.offsetWidth + 'px';
-      img.style.maxWidth = 'none';
-    }
-  });
-
-  window.addEventListener('resize', () => {
-    const img = clip.querySelector('img');
-    if(img && container) {
-      img.style.width = container.offsetWidth + 'px';
-    }
-  });
+      });
+  }
 
   // Sticky Nav Logic
   window.addEventListener('scroll', () => {
     const nav = document.querySelector('nav');
-    if (window.scrollY > 50) {
-      nav.style.padding = '15px 60px';
-      nav.style.background = 'rgba(9,16,26,0.98)';
-    } else {
-      nav.style.padding = '20px 60px';
-      nav.style.background = 'rgba(9,16,26,0.95)';
+    if(nav) {
+      if (window.scrollY > 50) {
+        nav.style.padding = '15px 60px';
+        nav.style.background = 'rgba(9,16,26,0.98)';
+      } else {
+        nav.style.padding = '20px 60px';
+        nav.style.background = 'rgba(9,16,26,0.95)';
+      }
     }
   });
 
