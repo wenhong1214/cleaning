@@ -42,8 +42,8 @@ export default async function handler(req, res) {
             body: JSON.stringify({
                 // OpenRouter fallback routing
                 models: [
-                    "anthropic/claude-opus-4.8:fast",
-                    "deepseek/deepseek-v4-flash",     
+                    "deepseek/deepseek-v4-flash",
+                    "anthropic/claude-opus-4.8:fast",  
                     "openai/gpt-5.4-nano"             
                 ],
                 messages: apiMessages,
