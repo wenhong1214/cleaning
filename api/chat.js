@@ -36,7 +36,8 @@ export default async function handler(req, res) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`
+                'Authorization': `Bearer ${apiKey}`,
+                "HTTP-Referer": "https://vercel.com"
             },
             body: JSON.stringify({
                 // OpenRouter fallback routing
