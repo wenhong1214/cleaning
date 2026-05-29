@@ -514,6 +514,83 @@
   const clip = document.getElementById('baClip');
   const container = document.getElementById('baContainer');
 
+  <!-- 前端 JavaScript 部分 -->
+
+    // 前端只保存用户的对话历史，不包含系统指令
+    let conversationHistory = [];
+
+    function toggleChat() {
+        const chatBox = document.getElementById('chat-box');
+        chatBox.style.display = chatBox.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    document.getElementById('close-chat').onclick = function() {
+        document.getElementById('chat-box').style.display = 'none';
+    };
+
+    function handleKeyPress(e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    }
+
+    async function sendMessage() {
+        const inputField = document.getElementById('user-input');
+        const messageText = inputField.value.trim();
+        if (!messageText) return;
+
+        // 在聊天框显示用户的消息
+        addMessageToChat(messageText, 'user-message');
+        inputField.value = '';
+
+        // 把用户的话加入对话历史
+        conversationHistory.push({ "role": "user", "content": messageText });
+
+        const typingId = addMessageToChat("Typing...", 'bot-message');
+
+        try {
+            // 注意！这里不再请求 openai，而是请求您自己在 Vercel 上的后端 API
+            const response = await fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    messages: conversationHistory
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById(typingId).remove();
+
+            if (data.choices && data.choices.length > 0) {
+                const botReply = data.choices[0].message.content;
+                // 保存AI回复到历史记录
+                conversationHistory.push({ "role": "assistant", "content": botReply });
+                addMessageToChat(botReply, 'bot-message');
+            } else {
+                addMessageToChat("System error. Please call 03-40438599.", 'bot-message');
+            }
+
+        } catch (error) {
+            console.error("API Error:", error);
+            document.getElementById(typingId).remove();
+            addMessageToChat("Network error. Please try again.", 'bot-message');
+        }
+    }
+
+    function addMessageToChat(text, className) {
+        const chatContent = document.getElementById('chat-content');
+        const messageDiv = document.createElement('div');
+        const msgId = 'msg-' + Date.now();
+        messageDiv.id = msgId;
+        messageDiv.className = 'message ' + className;
+        messageDiv.innerText = text;
+        chatContent.appendChild(messageDiv);
+        chatContent.scrollTop = chatContent.scrollHeight;
+        return msgId;
+    }
+
   slider.addEventListener('input', (e) => {
     clip.style.width = e.target.value + '%';
     const img = clip.querySelector('img');
