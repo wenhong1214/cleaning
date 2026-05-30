@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     console.log('📥 [DEBUG] Received messages count:', messages.length);
     if (messages.length > 0) {
         const lastMsg = messages[messages.length - 1];
-        console.log('📥 [DEBUG] Last user message:', lastMsg.content?.substring(0, 100));
+        console.log('📥 [DEBUG] Last user message:', lastMsg.content?.substring);
     }
 
     // 3. System Prompt (Hidden safely on the backend)
